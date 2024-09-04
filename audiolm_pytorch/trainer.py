@@ -67,8 +67,8 @@ ONE_TRAINER_INSTANTIATED = False
 
 def check_one_trainer():
     global ONE_TRAINER_INSTANTIATED
-    assert not ONE_TRAINER_INSTANTIATED, 'only one Trainer can be instantiated at a time for training'
-    ONE_TRAINER_INSTANTIATED = True
+    #assert not ONE_TRAINER_INSTANTIATED, 'only one Trainer can be instantiated at a time for training'
+    #ONE_TRAINER_INSTANTIATED = True
 
 DEFAULT_DDP_KWARGS = DistributedDataParallelKwargs(find_unused_parameters = True)
 
@@ -418,8 +418,10 @@ class SoundStreamTrainer(nn.Module):
 
         self.results_folder = Path(results_folder)
 
+        '''
         if self.is_main and force_clear_prev_results is True or (not exists(force_clear_prev_results) and len([*self.results_folder.glob('**/*')]) > 0 and yes_or_no('do you want to clear previous experiment checkpoints and results?')):
             rmtree(str(self.results_folder))
+        '''
 
         self.accelerator.wait_for_everyone()
         self.results_folder.mkdir(parents = True, exist_ok = True)
