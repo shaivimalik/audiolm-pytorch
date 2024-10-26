@@ -24,7 +24,7 @@ warnings.warn = noop
 # import fairseq and joblib for hubert
 
 import joblib
-import fairseq
+import fairseq2
 
 # helper functions
 
@@ -62,7 +62,8 @@ class HubertWithKmeans(nn.Module):
 
         checkpoint = torch.load(checkpoint_path)
         load_model_input = {checkpoint_path: checkpoint}
-        model, *_ = fairseq.checkpoint_utils.load_model_ensemble_and_task(load_model_input)
+        loader = fairseq2.model.ModelLoader()
+        model, *_ = loader.load_ensemble_and_task(load_model_input)
 
         self.model = model[0]
         self.model.eval()
